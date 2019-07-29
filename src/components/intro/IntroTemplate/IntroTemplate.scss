@@ -1,0 +1,14 @@
+.intro-template{
+    background: no-repeat left/50% url('../../../images/background.jpg');
+    height: 100%;
+    display: flex;
+    
+    main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left:auto;
+        align-items: center;
+        margin-right:5rem;
+    }
+}
