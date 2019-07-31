@@ -1,33 +1,34 @@
 import {createAction, handleActions} from 'redux-actions';
-
 // action types
 
 const INIT = 'baggage/INIT';
-const INCREASE = 'baggage/INCREASE';
-const DECREASE = 'baggage/DECREASE';
-
-
+const SET_LINE_LENGTH='baggage/SET_LINE_LENGTH';
+const SET_MAX_WEIGHT='baggage/SET_MAX_WEIGHT';
+const SET_BAGGAGE_LIST='baggage/SET_BAGGAGE_LIST';
 // action creators
 
 export const init = createAction(INIT);
-export const increase = createAction(INCREASE);
-export const decrease = createAction(DECREASE);
-
-
-
+export const setLineLength=createAction(SET_LINE_LENGTH);
+export const setMaxWeight=createAction(SET_MAX_WEIGHT);
+export const setBaggageList=createAction(SET_BAGGAGE_LIST);
 
 // initial state
 const initialState = {
- num:0,
+    lineLength: 0,
+    maxWeight: 0,
+    baggageList: ""
 };
 
 // reducer
 export default handleActions({
     [init]: (state, action) => initialState,
-    [INCREASE]: (state, action) => {
-        return state.set("num", state.get('num')+1);
+    [SET_LINE_LENGTH]: (state, action) => {
+        return { ...state,lineLength: action.payload };
     },
-    [DECREASE]: (state, action) => {
-        return state.set("num", state.get('num')-1);
+    [SET_MAX_WEIGHT]: (state, action) => {
+        return {  ...state,maxWeight: action.payload };
+    },
+    [SET_BAGGAGE_LIST]: (state, action) => {
+        return {  ...state,baggageList: action.payload };
     },
 }, initialState);

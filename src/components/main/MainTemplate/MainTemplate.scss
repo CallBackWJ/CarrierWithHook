@@ -1,0 +1,29 @@
+.main-template{
+    height: 100%;
+    background: gray;
+    display: flex;
+    flex-direction: column;
+    .header-template{
+        flex: 0.2;
+    }
+    .body-template{
+        flex:0.8;
+        display: flex;
+        .none-delivery-template{
+            flex: 1;
+            background: red;
+
+        }
+        .carrier-template{
+            flex: 1;
+            background: green;
+        }
+        .delivered-template{
+            flex: 1;
+            background: blue;
+        }
+    }
+
+
+
+}

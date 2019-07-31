@@ -1,0 +1,12 @@
+.baggage{
+    width: 5rem;
+    height: 5rem;
+    background: white;
+    border:solid 1px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.blank{
+        background: black;
+    }
+}
