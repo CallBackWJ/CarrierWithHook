@@ -1,6 +1,6 @@
 .main-template{
     height: 100%;
-    background: gray;
+    background: darkgrey;
     display: flex;
     flex-direction: column;
     .header-template{
@@ -9,18 +9,18 @@
     .body-template{
         flex:0.8;
         display: flex;
+        background: silver;
         .none-delivery-template{
             flex: 1;
-            background: red;
-
+          
         }
         .carrier-template{
-            flex: 1;
-            background: green;
+            flex: 2.5;
+            background:whitesmoke;
         }
         .delivered-template{
             flex: 1;
-            background: blue;
+            
         }
     }
 

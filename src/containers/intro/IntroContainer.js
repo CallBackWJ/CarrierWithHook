@@ -35,9 +35,9 @@ class IntroContainer extends Component {
     const {lineLength,maxWeight,baggageList}=this.state;
     return (
       <IntroTemplate>
-        <NumberForm labelName='라인 길이' onChage={this.handleLineLengthChange} value={lineLength}/>
-        <NumberForm labelName='최대 무게' onChage={this.handleMaxWeightChange} value={maxWeight}/>
-        <NumberForm labelName='운반 목록' onChage={this.handleListChange} value={baggageList}/>
+        <NumberForm type='number' labelName='라인 길이' onChage={this.handleLineLengthChange} value={lineLength}/>
+        <NumberForm type='number' labelName='최대 무게' onChage={this.handleMaxWeightChange} value={maxWeight}/>
+        <NumberForm type='text'labelName='운반 목록' onChage={this.handleListChange} value={baggageList}/>
         <Link to="/main" onClick={this.handleClick}>START </Link>
       </IntroTemplate>
     );
