@@ -16,6 +16,7 @@ class MainContainer extends Component {
     time: 0
   };
 
+  
   makeInitializedArray = (length, value) =>
     Array.apply(null, new Array(length)).map(Number.prototype.valueOf, value);
 
@@ -34,25 +35,36 @@ class MainContainer extends Component {
 
   handleCarrier = () => {
     const { beforeList, carrier, afterList, time } = this.state;
-    const beforeTemp = beforeList.shift() || 0;
-    const carrierTemp = carrier.shift() || 0;
+    //배열 연산을 위해 복사본 생성;
+    const newBeforeList=this.copyArray(beforeList);
+    const newCarrier=this.copyArray(carrier);
+    const newAfterList=this.copyArray(afterList);
+    const newTime=time+1;
 
+    //before 배열에서 하나의 요소를 빼옴
+    const beforeTemp = newBeforeList.shift() || 0;
+    //carrier 배열에서 하나의 요소를 빼옴
+    const carrierTemp = newCarrier.shift() || 0;
+
+    //carrier의 요소가 0이 아니면 after배열에 삽입
     if (carrierTemp !== 0) {
-      afterList.push(carrierTemp);
+      newAfterList.push(carrierTemp);
     }
 
-    if (this.isInputableToCarrier(carrier, beforeTemp)) {
-      carrier.push(beforeTemp);
+    //before 배열에서 빼온 요소를 carrier요소에 삽입가능하면 삽입
+    //삽입 불가능하면 before배열에 다시 돌려놓는다.
+    if (this.isInputableToCarrier(newCarrier, beforeTemp)) {
+      newCarrier.push(beforeTemp);
     } else {
-      carrier.push(0);
-      beforeList.unshift(beforeTemp);
+      newCarrier.push(0);
+      newBeforeList.unshift(beforeTemp);
     }
 
     this.setState({
-      carrier: this.copyArray(carrier),
-      beforeList: this.copyArray(beforeList),
-      afterList: this.copyArray(afterList),
-      time: time + 1
+      carrier: newCarrier,
+      beforeList: newBeforeList,
+      afterList: newAfterList,
+      time: newTime,
     });
 
     if (!this.isTerminated(carrier, beforeList)) {
