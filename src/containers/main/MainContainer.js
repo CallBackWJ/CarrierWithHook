@@ -34,28 +34,26 @@ class MainContainer extends Component {
   copyArray = (arr = []) => arr.map(e => e);
 
   //BeforList와 Carrier가 비어있으면 종료
-  isTerminated = (arr = [], emptyArr = []) =>
-    this.isListEmpty(emptyArr) &&
-    this.isInputableToCarrier(arr, Number(this.props.maxWeight));
+  isTerminated = (carrier = [], before = []) =>
+    this.isListEmpty(before) &&
+    this.isInputableToCarrier(carrier, Number(this.props.maxWeight));
 
   handleCarrier = () => {
     const { beforeList, carrier, afterList, time } = this.state;
 
     //배열 연산을 위해 복사본 생성;
-    const newBeforeList=this.copyArray(beforeList);
-    const newCarrier=this.copyArray(carrier);
-    const newAfterList=this.copyArray(afterList);
+    const newBeforeList = this.copyArray(beforeList);
+    const newCarrier = this.copyArray(carrier);
+    const newAfterList = this.copyArray(afterList);
 
-    //before 배열에서 하나의 요소를 빼옴
+    //이동을 위해 배열에서 하나의 요소를 빼옴
     const beforeTemp = newBeforeList.shift() || 0;
-    //carrier 배열에서 하나의 요소를 빼옴
     const carrierTemp = newCarrier.shift() || 0;
 
     //carrier의 요소가 빈상자(0)가 아니면 after배열에 삽입
     if (carrierTemp !== 0) {
       newAfterList.push(carrierTemp);
     }
-
     //before 배열에서 빼온 요소를 carrier요소에 삽입가능하면 삽입
     //삽입 불가능하면 Carrier에 빈상자(0)을 삽입, before배열은 빼왔던 요소를 복구.
     if (this.isInputableToCarrier(newCarrier, beforeTemp)) {
@@ -65,15 +63,14 @@ class MainContainer extends Component {
       newBeforeList.unshift(beforeTemp);
     }
 
-    
+    this.setState({
+      carrier: newCarrier,
+      beforeList: newBeforeList,
+      afterList: newAfterList,
+      time: time + 1
+    });
 
-    if (!this.isTerminated(carrier, beforeList)) {
-      this.setState({
-        carrier: newCarrier,
-        beforeList: newBeforeList,
-        afterList: newAfterList,
-        time: time+1,
-      });
+    if (!this.isTerminated(newCarrier, newBeforeList)) {
       setTimeout(this.handleCarrier, 1000);
     }
   };
