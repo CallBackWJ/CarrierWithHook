@@ -1,14 +1,16 @@
 .baggage{
     width: 5rem;
     height: 5rem;
-    background: white;
-    border:solid 1px black;
+    background:  wheat;
+    border:solid 1px whitesmoke;
     display: flex;
+    font-size: 2rem;
+    color: dimgrey;
     align-items: center;
     justify-content: center;
     
     &.blank{
-        background: black;
+        background: dimgrey;
     }
 
 }

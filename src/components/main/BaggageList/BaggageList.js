@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import Baggage from '../Baggage'
 import styles from "./BaggageList.scss";
 import classNames from "classnames/bind";
@@ -13,5 +14,8 @@ const BaggageList = (props) => {
         </div>
     );
 };
-
+BaggageList.propTypes = {
+    group: PropTypes.string,
+    list: PropTypes.array.isRequired,
+  };
 export default React.memo(BaggageList);

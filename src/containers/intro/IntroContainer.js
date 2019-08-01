@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { withRouter } from "react-router-dom";
 import * as baggageActions from "../../store/modules/baggage";
 import IntroTemplate from "../../components/intro/IntroTemplate";
-import NumberForm from "../../components/intro/NumberForm";
+import DataForm from "../../components/intro/DataForm";
 
 class IntroContainer extends Component {
   state = {
@@ -62,23 +62,26 @@ class IntroContainer extends Component {
     const { lineLength, maxWeight, baggageList } = this.state;
     return (
       <IntroTemplate>
-        <NumberForm
+        <DataForm
           type="number"
           labelName="라인 길이"
-          onChage={this.handleLineLengthChange}
+          onChange={this.handleLineLengthChange}
           value={lineLength}
+          placeholder='양의 정수만 입력해주세요.'
         />
-        <NumberForm
+        <DataForm
           type="number"
           labelName="최대 무게"
-          onChage={this.handleMaxWeightChange}
+          onChange={this.handleMaxWeightChange}
           value={maxWeight}
+          placeholder='양의 정수만 입력해주세요.'
         />
-        <NumberForm
+        <DataForm
           type="text"
           labelName="운반 목록"
-          onChage={this.handleListChange}
+          onChange={this.handleListChange}
           value={baggageList}
+          placeholder='쉼표(,)로 구분해주세요.'
         />
         <button onClick={this.handleClick} disabled={!this.isFormFilled()}>
           START

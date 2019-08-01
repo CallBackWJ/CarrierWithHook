@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import DataFiled from "../DataFiled";
 const Header = (props) => {
     console.log('Header::reder');
@@ -11,5 +12,11 @@ const Header = (props) => {
         </>
     );
 };
-
+Header.propTypes = {
+    length: PropTypes.number.isRequired,
+    weight: PropTypes.number.isRequired,
+    list: PropTypes.string.isRequired,
+    disabled:PropTypes.bool.isRequired,
+    onClick:PropTypes.func.isRequired
+  };
 export default React.memo(Header);
