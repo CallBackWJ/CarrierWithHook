@@ -10,17 +10,19 @@
         flex:0.8;
         display: flex;
         background: silver;
+        overflow: hidden;
         .none-delivery-template{
             flex: 1;
-          
+            overflow: auto;
         }
         .carrier-template{
             flex: 2.5;
+            overflow: auto;
             background:whitesmoke;
         }
         .delivered-template{
             flex: 1;
-            
+            overflow: auto;
         }
     }
 

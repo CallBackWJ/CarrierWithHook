@@ -8,4 +8,4 @@ const DataFiled = (props) => {
     );
 };
 
-export default DataFiled;
+export default React.memo(DataFiled);

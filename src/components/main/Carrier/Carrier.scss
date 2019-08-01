@@ -1,13 +1,13 @@
 .carrier{
     display: flex;
+    height: 100%;
     flex-direction: column;
     align-items: center;
-    margin-top:30%; 
+    justify-content: center;
  
     .item{
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
+    flex-flow: row-reverse wrap;
     }
    
 }

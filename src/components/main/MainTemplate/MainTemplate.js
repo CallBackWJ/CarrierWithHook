@@ -14,4 +14,4 @@ const MainTemplate = ({ children }) => (
   </div>
 );
 
-export default MainTemplate;
+export default React.memo(MainTemplate);

@@ -9,4 +9,4 @@ const IntroTemplate = ({ children }) => (
   </div>
 );
 
-export default IntroTemplate;
+export default React.memo(IntroTemplate);

@@ -16,7 +16,7 @@ export const setBaggageList=createAction(SET_BAGGAGE_LIST);
 const initialState = {
     lineLength: 0,
     maxWeight: 0,
-    baggageList: ""
+    baggageList: [],
 };
 
 // reducer
