@@ -25,58 +25,49 @@ class MainContainer extends Component {
 
   //BeforList와 Carrier가 비어있으면 종료
   isTerminated = (carrier = [], before = []) =>
-    (before.length === 0) &&
-    this.isInputableToCarrier(carrier, Number(this.props.maxWeight));
+    before.length === 0 &&this.isInputableToCarrier(carrier, this.props.maxWeight);
 
-    
-  handleCarrier = () => {
-    const { beforeList, carrier, afterList, time } = this.state;
-
-    //배열 연산을 위해 복사본 생성;
-    const newBeforeList = beforeList?beforeList.slice():[];
-    const newCarrier = carrier?carrier.slice():[];
-    const newAfterList = afterList?afterList.slice():[];
-
-    //*********************************************/
+  handleCarrier = ( beforeList = [],carrier = [],afterList = [],time = 0) => () => {
     //이동을 위해 배열에서 하나의 요소를 빼옴
-    const beforeTemp = newBeforeList.shift() || 0;
-    const carrierTemp = newCarrier.shift() || 0;
+    const beforeTemp = beforeList.shift() || 0;
+    const carrierTemp = carrier.shift() || 0;
 
     //carrier의 요소가 빈상자(0)가 아니면 after배열에 삽입
     if (carrierTemp !== 0) {
-      newAfterList.push(carrierTemp);
+      afterList.push(carrierTemp);
     }
-    //before 배열에서 빼온 요소를 carrier요소에 삽입가능하면 삽입
-    //삽입 불가능하면 Carrier에 빈상자(0)을 삽입, before배열은 빼왔던 요소를 복구.
-    if (this.isInputableToCarrier(newCarrier, beforeTemp)) {
-      newCarrier.push(beforeTemp);
+    //beforeTemp를 carrier에 삽입가능하면 삽입 / 불가능하면 Carrier에 빈상자(0)을 삽입, before배열은 빼왔던 요소를 복구.
+    if (this.isInputableToCarrier(carrier, beforeTemp)) {
+      carrier.push(beforeTemp);
     } else {
-      newCarrier.push(0);
-      newBeforeList.unshift(beforeTemp);
+      carrier.push(0);
+      beforeList.unshift(beforeTemp);
     }
-    //*********************************************/
     //데이터 갱신
-    
     this.setState({
-      carrier: newCarrier,
-      beforeList: newBeforeList,
-      afterList: newAfterList,
+      carrier: carrier,
+      beforeList: beforeList,
+      afterList: afterList,
       time: time + 1
     });
-
-    if (!this.isTerminated(newCarrier, newBeforeList)) {
-      setTimeout(this.handleCarrier, 1000);
+    //옮길 물건이 남았으면 재실행
+    if (!this.isTerminated(carrier, beforeList)) {
+      setTimeout(this.handleCarrier(beforeList.slice(),carrier.slice(),afterList.slice(),time + 1),1000);
     }
   };
 
   start = () => {
+    const { lineLength, baggageList } = this.props;
     this.setState({
-      carrier: Array(this.props.lineLength).fill(0),
-      beforeList: this.props.baggageList?this.props.baggageList.slice():[],
+      carrier: Array(lineLength).fill(0),
+      beforeList: baggageList.slice(),
       afterList: [],
       time: 0
     });
-    setTimeout(this.handleCarrier, 1000);
+    setTimeout(
+      this.handleCarrier(baggageList.slice(), Array(lineLength).fill(0)),
+      1000
+    );
   };
 
   render() {
