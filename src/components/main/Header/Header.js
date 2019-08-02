@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataFiled from "../DataFiled";
 const Header = props => {
+    console.log('Header');
   return (
     <>
       <DataFiled label="운반 라인 길이" value={props.length} />

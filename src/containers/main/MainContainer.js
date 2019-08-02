@@ -35,18 +35,21 @@ class MainContainer extends Component {
     //carrier의 요소가 빈상자(0)가 아니면 after배열에 삽입
     if (carrierTemp !== 0) {
       afterList.push(carrierTemp);
+      this.setState({afterList: afterList});
     }
 
     //beforeTemp를 carrier에 삽입가능하면 삽입 / 불가능하면 Carrier에 빈상자(0)을 삽입, before배열은 빼왔던 요소를 복구.
     if (this.isInputableToCarrier(carrier, beforeTemp)) {
       carrier.push(beforeTemp);
+      this.setState({beforeList: beforeList});
     } else {
       carrier.push(0);
       beforeList.unshift(beforeTemp);
     }
 
     //데이터 갱신
-    this.setState({carrier: carrier,beforeList: beforeList,afterList: afterList,time: time + 1});
+    //this.setState({carrier: carrier,beforeList: beforeList,afterList: afterList,time: time + 1});
+    this.setState({carrier: carrier,time: time + 1});
 
     //옮길 물건이 남았으면 재실행
     if (!this.isTerminated(carrier, beforeList)) {

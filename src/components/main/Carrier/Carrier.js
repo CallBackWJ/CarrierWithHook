@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 
 const Carrier = props => {
+  console.log('Carrier',props.list);
   const { list = [] } = props;
   const Baggages = list.map((e, i) => (
     <Baggage key={i} weight={e} group={props.group} />
