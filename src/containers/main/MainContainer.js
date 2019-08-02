@@ -16,10 +16,6 @@ class MainContainer extends Component {
     time: 0
   };
 
-  //초기화된 배열 생성
-  makeInitializedArray = (length, value) =>
-    Array.apply(null, new Array(length)).map(Number.prototype.valueOf, value);
-
   //Carrier 배열에 삽입가능한가.
   isInputableToCarrier = (carrier = [], input = 0) =>
     this.getArraySum(carrier) + input <= this.props.maxWeight;
@@ -27,25 +23,21 @@ class MainContainer extends Component {
   //배열요소의 합계
   getArraySum = (arr = []) => arr.reduce((acc, cur) => acc + cur, 0);
 
-  //리스트가 비었는가.
-  isListEmpty = (arr = []) => arr.length === 0;
-
-  //배열 복사
-  copyArray = (arr = []) => arr.map(e => e);
-
   //BeforList와 Carrier가 비어있으면 종료
   isTerminated = (carrier = [], before = []) =>
-    this.isListEmpty(before) &&
+    (before.length === 0) &&
     this.isInputableToCarrier(carrier, Number(this.props.maxWeight));
 
+    
   handleCarrier = () => {
     const { beforeList, carrier, afterList, time } = this.state;
 
     //배열 연산을 위해 복사본 생성;
-    const newBeforeList = this.copyArray(beforeList);
-    const newCarrier = this.copyArray(carrier);
-    const newAfterList = this.copyArray(afterList);
+    const newBeforeList = beforeList?beforeList.slice():[];
+    const newCarrier = carrier?carrier.slice():[];
+    const newAfterList = afterList?afterList.slice():[];
 
+    //*********************************************/
     //이동을 위해 배열에서 하나의 요소를 빼옴
     const beforeTemp = newBeforeList.shift() || 0;
     const carrierTemp = newCarrier.shift() || 0;
@@ -62,7 +54,9 @@ class MainContainer extends Component {
       newCarrier.push(0);
       newBeforeList.unshift(beforeTemp);
     }
-
+    //*********************************************/
+    //데이터 갱신
+    
     this.setState({
       carrier: newCarrier,
       beforeList: newBeforeList,
@@ -77,8 +71,8 @@ class MainContainer extends Component {
 
   start = () => {
     this.setState({
-      carrier: this.makeInitializedArray(this.props.lineLength, 0),
-      beforeList: this.copyArray(this.props.baggageList),
+      carrier: Array(this.props.lineLength).fill(0),
+      beforeList: this.props.baggageList?this.props.baggageList.slice():[],
       afterList: [],
       time: 0
     });
