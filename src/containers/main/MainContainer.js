@@ -47,8 +47,6 @@ class MainContainer extends Component {
       beforeList.unshift(beforeTemp);
     }
 
-    //데이터 갱신
-    //this.setState({carrier: carrier,beforeList: beforeList,afterList: afterList,time: time + 1});
     this.setState({carrier: carrier,time: time + 1});
 
     //옮길 물건이 남았으면 재실행
