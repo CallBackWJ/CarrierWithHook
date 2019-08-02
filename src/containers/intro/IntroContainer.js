@@ -28,7 +28,7 @@ class IntroContainer extends Component {
   //문자열을 구분자로 나누어서 배열로 만든다.
   makeToArray = (str, token) =>
     str.split(token).reduce((acc, cur) => {
-      if (cur!=='0'&&cur!=='') {
+      if (cur !== "0" && cur !== "") {
         acc.push(Number(cur));
       }
       return acc;
@@ -67,21 +67,21 @@ class IntroContainer extends Component {
           labelName="라인 길이"
           onChange={this.handleLineLengthChange}
           value={lineLength}
-          placeholder='양의 정수만 입력해주세요.'
+          placeholder="양의 정수만 입력해주세요."
         />
         <DataForm
           type="number"
           labelName="최대 무게"
           onChange={this.handleMaxWeightChange}
           value={maxWeight}
-          placeholder='양의 정수만 입력해주세요.'
+          placeholder="양의 정수만 입력해주세요."
         />
         <DataForm
           type="text"
           labelName="운반 목록"
           onChange={this.handleListChange}
           value={baggageList}
-          placeholder='쉼표(,)로 구분해주세요.'
+          placeholder="쉼표(,)로 구분해주세요."
         />
         <button onClick={this.handleClick} disabled={!this.isFormFilled()}>
           START

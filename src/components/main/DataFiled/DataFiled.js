@@ -1,13 +1,12 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-const DataFiled = (props) => {
-    return (
-        <div>
-            {props.label}:{props.value}
-        </div>
-    );
-};
+const DataFiled = props => (
+  <div>
+    {props.label}:{props.value}
+  </div>
+);
+
 DataFiled.propTypes = {
-    label: PropTypes.string.isRequired,
-  };
+  label: PropTypes.string.isRequired
+};
 export default React.memo(DataFiled);

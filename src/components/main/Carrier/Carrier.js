@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 
 const Carrier = props => {
-  console.log("Carrier::reder");
   const { list = [] } = props;
   const Baggages = list.map((e, i) => (
     <Baggage key={i} weight={e} group={props.group} />
@@ -21,10 +20,9 @@ const Carrier = props => {
   );
 };
 Carrier.propTypes = {
-    list: PropTypes.array.isRequired,
-    time: PropTypes.number.isRequired,
-    weight: PropTypes.number.isRequired,
-    group:PropTypes.string,
-  };
+  list: PropTypes.array.isRequired,
+  time: PropTypes.number.isRequired,
+  weight: PropTypes.number.isRequired
+};
 
 export default React.memo(Carrier);
