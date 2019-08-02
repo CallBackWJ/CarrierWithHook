@@ -26,10 +26,12 @@ class IntroContainer extends Component {
     this.state.baggageList !== "";
 
   //문자열을 구분자로 나누어서 배열로 만든다.
-  makeToArray = (str, token) =>
-    str.split(token).reduce((acc, cur) => {
-      if (cur !== "0" && cur !== "") {
+  makeToArray = (str, token,maxNum) =>
+    str.split(token).reduce((acc, cur, index) => {
+      if (cur !== "0" && cur !== ""&&Number(cur)<=maxNum) {
         acc.push(Number(cur));
+      }else{
+        alert('올바르지 않은 데이터를 삭제 후 실행합니다.['+index+'] 데이터:['+cur+']');
       }
       return acc;
     }, []);
@@ -54,7 +56,7 @@ class IntroContainer extends Component {
     const { lineLength, maxWeight, baggageList } = this.state;
     BaggageActions.setLineLength(Number(lineLength));
     BaggageActions.setMaxWeight(Number(maxWeight));
-    BaggageActions.setBaggageList(this.makeToArray(baggageList, ","));
+    BaggageActions.setBaggageList(this.makeToArray(baggageList, ",",maxWeight));
     this.props.history.push("/main");
   };
 
