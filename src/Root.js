@@ -1,18 +1,16 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import configure from "./store/configure";
+import { BaggageProvider } from "./contexts/BaggageProvider";
 import App from "./App";
 
-const store = configure();
 
 const Root = () => {
   return (
-    <Provider store={store}>
+    <BaggageProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </Provider>
+    </BaggageProvider>
   );
 };
 

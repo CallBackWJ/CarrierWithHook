@@ -1,101 +1,96 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
-import * as baggageActions from "../../store/modules/baggage";
 import IntroTemplate from "../../components/intro/IntroTemplate";
 import DataForm from "../../components/intro/DataForm";
-
-class IntroContainer extends Component {
-  state = {
+import BaggageContext from "../../contexts/BaggageContext";
+const IntroContainer = props => {
+  const IntroState = {
     lineLength: "",
     maxWeight: "",
     baggageList: ""
   };
+  const [lineLength, maxWeight, baggageList] = useState(IntroState);
+  const { setValue } = useContext(BaggageContext);
 
   //문자열에 0~9이외에 문자가 있는지 체크
-  isNumberFormValid = text => !/[^0-9]/g.test(text);
+  const isNumberFormValid = text => !/[^0-9]/g.test(text);
 
   //문자열에 0~9의 숫자와 [ , ] 이외에 문자가 있는지 체크
-  isListFormValid = text => !/[^0-9,]/g.test(text);
+  const isListFormValid = text => !/[^0-9,]/g.test(text);
 
   //입력폼이 모두 채워져 있는지 체크
-  isFormFilled = () =>
+  const isFormFilled = () =>
     this.state.lineLength !== "" &&
     this.state.maxWeight !== "" &&
     this.state.baggageList !== "";
 
   //문자열을 구분자로 나누어서 배열로 만든다.
-  makeToArray = (str, token,maxNum) =>
+  const makeToArray = (str, token, maxNum) =>
     str.split(token).reduce((acc, cur, index) => {
-      if (cur !== "0" && cur !== ""&&Number(cur)<=maxNum) {
+      if (cur !== "0" && cur !== "" && Number(cur) <= maxNum) {
         acc.push(Number(cur));
-      }else{
-        alert('올바르지 않은 데이터를 삭제 후 실행합니다.['+index+'] 데이터:['+cur+']');
+      } else {
+        alert(
+          "올바르지 않은 데이터를 삭제 후 실행합니다.[" +
+            index +
+            "] 데이터:[" +
+            cur +
+            "]"
+        );
       }
       return acc;
     }, []);
 
-  handleLineLengthChange = e =>
+  const handleLineLengthChange = e =>
     this.setState({
-      lineLength: this.isNumberFormValid(e.target.value) ? e.target.value : ""
+      lineLength: isNumberFormValid(e.target.value) ? e.target.value : ""
     });
 
-  handleMaxWeightChange = e =>
+  const handleMaxWeightChange = e =>
     this.setState({
-      maxWeight: this.isNumberFormValid(e.target.value) ? e.target.value : ""
+      maxWeight: isNumberFormValid(e.target.value) ? e.target.value : ""
     });
 
-  handleListChange = e =>
+  const handleListChange = e =>
     this.setState({
-      baggageList: this.isListFormValid(e.target.value) ? e.target.value : ""
+      baggageList: isListFormValid(e.target.value) ? e.target.value : ""
     });
 
-  handleClick = () => {
-    const { BaggageActions } = this.props;
-    const { lineLength, maxWeight, baggageList } = this.state;
-    BaggageActions.setLineLength(Number(lineLength));
-    BaggageActions.setMaxWeight(Number(maxWeight));
-    BaggageActions.setBaggageList(this.makeToArray(baggageList, ",",maxWeight));
-    this.props.history.push("/main");
+  const handleClick = () => {
+    setValue("lineLength", Number(lineLength));
+    setValue("maxWeight", Number(maxWeight));
+    setValue("baggageList", makeToArray(baggageList, ",", maxWeight));
+    props.history.push("/main");
   };
 
-  render() {
-    const { lineLength, maxWeight, baggageList } = this.state;
-    return (
-      <IntroTemplate>
-        <DataForm
-          type="number"
-          labelName="라인 길이"
-          onChange={this.handleLineLengthChange}
-          value={lineLength}
-          placeholder="양의 정수만 입력해주세요."
-        />
-        <DataForm
-          type="number"
-          labelName="최대 무게"
-          onChange={this.handleMaxWeightChange}
-          value={maxWeight}
-          placeholder="양의 정수만 입력해주세요."
-        />
-        <DataForm
-          type="text"
-          labelName="운반 목록"
-          onChange={this.handleListChange}
-          value={baggageList}
-          placeholder="쉼표(,)로 구분해주세요."
-        />
-        <button onClick={this.handleClick} disabled={!this.isFormFilled()}>
-          START
-        </button>
-      </IntroTemplate>
-    );
-  }
-}
+  return (
+    <IntroTemplate>
+      <DataForm
+        type="number"
+        labelName="라인 길이"
+        onChange={handleLineLengthChange}
+        value={lineLength}
+        placeholder="양의 정수만 입력해주세요."
+      />
+      <DataForm
+        type="number"
+        labelName="최대 무게"
+        onChange={handleMaxWeightChange}
+        value={maxWeight}
+        placeholder="양의 정수만 입력해주세요."
+      />
+      <DataForm
+        type="text"
+        labelName="운반 목록"
+        onChange={handleListChange}
+        value={baggageList}
+        placeholder="쉼표(,)로 구분해주세요."
+      />
+      <button onClick={handleClick} disabled={!isFormFilled()}>
+        START
+      </button>
+    </IntroTemplate>
+  );
+};
 
-export default connect(
-  state => ({}),
-  dispatch => ({
-    BaggageActions: bindActionCreators(baggageActions, dispatch)
-  })
-)(withRouter(IntroContainer));
+export default withRouter(IntroContainer);
