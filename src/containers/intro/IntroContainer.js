@@ -3,13 +3,15 @@ import { withRouter } from "react-router-dom";
 import IntroTemplate from "../../components/intro/IntroTemplate";
 import DataForm from "../../components/intro/DataForm";
 import BaggageContext from "../../contexts/BaggageContext";
+
 const IntroContainer = props => {
   const IntroState = {
     lineLength: "",
     maxWeight: "",
     baggageList: ""
   };
-  const [lineLength, maxWeight, baggageList] = useState(IntroState);
+  const [state, action] = useState(IntroState);
+  const { lineLength, maxWeight, baggageList } = state;
   const { setValue } = useContext(BaggageContext);
 
   //문자열에 0~9이외에 문자가 있는지 체크
@@ -20,9 +22,7 @@ const IntroContainer = props => {
 
   //입력폼이 모두 채워져 있는지 체크
   const isFormFilled = () =>
-    this.state.lineLength !== "" &&
-    this.state.maxWeight !== "" &&
-    this.state.baggageList !== "";
+    lineLength !== "" && maxWeight !== "" && baggageList !== "";
 
   //문자열을 구분자로 나누어서 배열로 만든다.
   const makeToArray = (str, token, maxNum) =>
@@ -42,17 +42,20 @@ const IntroContainer = props => {
     }, []);
 
   const handleLineLengthChange = e =>
-    this.setState({
+    action({
+      ...state,
       lineLength: isNumberFormValid(e.target.value) ? e.target.value : ""
     });
 
   const handleMaxWeightChange = e =>
-    this.setState({
+    action({
+      ...state,
       maxWeight: isNumberFormValid(e.target.value) ? e.target.value : ""
     });
 
   const handleListChange = e =>
-    this.setState({
+    action({
+      ...state,
       baggageList: isListFormValid(e.target.value) ? e.target.value : ""
     });
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { BaggageProvider } from "./contexts/BaggageProvider";
+import  BaggageProvider  from "./contexts/BaggageProvider";
 import App from "./App";
 
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { BaggageContext } from "./BaggageContext";
+import  BaggageContext  from "./BaggageContext";
 
 const BaggageProvider = ({ children }) => {
- 
+
   const setValue = (key,value) => {
     action(prevState => {
       return {
