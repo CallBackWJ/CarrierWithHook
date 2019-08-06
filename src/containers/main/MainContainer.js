@@ -6,15 +6,12 @@ import Carrier from "../../components/main/Carrier";
 import BaggageContext from "../../contexts/BaggageContext";
 
 const MainContainer = props => {
-  const MainState = {
-    beforeList: [],
-    carrier: [],
-    afterList: [],
-    time: 0
-  };
-  const [state, action] = useState(MainState);
-  const { beforeList, carrier, afterList, time } = state;
   const { lineLength, maxWeight, baggageList } = useContext(BaggageContext);
+
+  const [beforeList, setBeforeList] = useState([]);
+  const [carrier, setCarrier] = useState([]);
+  const [afterList, setAfterList] = useState([]);
+  const [time, setTime] = useState(0);
 
   //Carrier 배열에 삽입가능한가.
   const isInputableToCarrier = (carrier = [], input = 0) =>
@@ -35,33 +32,32 @@ const MainContainer = props => {
     //carrier의 요소가 빈상자(0)가 아니면 after배열에 삽입
     if (carrierTemp !== 0) {
       afterList.push(carrierTemp);
+      setAfterList(afterList);
     }
 
     //beforeTemp를 carrier에 삽입가능하면 삽입 / 불가능하면 Carrier에 빈상자(0)을 삽입, before배열은 빼왔던 요소를 복구.
     if (isInputableToCarrier(carrier, beforeTemp)) {
       carrier.push(beforeTemp);
+      setBeforeList(beforeList);
     } else {
       carrier.push(0);
       beforeList.unshift(beforeTemp);
     }
 
-    action({ afterList: afterList,beforeList: beforeList , carrier: carrier, time: time + 1 });
+    setCarrier(carrier);
+    setTime(time + 1);
 
     //옮길 물건이 남았으면 재실행
     if (!isTerminated(carrier, beforeList)) {
-      setTimeout(
-        handleCarrier(beforeList.slice(),carrier.slice(),afterList.slice(),time + 1),1000
-      );
+      setTimeout(handleCarrier(beforeList.slice(),carrier.slice(),afterList.slice(),time + 1),1000);
     }
   };
 
   const start = () => {
-    action({
-      carrier: Array(lineLength).fill(0),
-      beforeList: baggageList.slice(),
-      afterList: [],
-      time: 0
-    });
+    setBeforeList(baggageList.slice());
+    setCarrier(Array(lineLength).fill(0));
+    setAfterList([]);
+    setTime(0);
     setTimeout(
       handleCarrier(baggageList.slice(), Array(lineLength).fill(0)),
       1000
