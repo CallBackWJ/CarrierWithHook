@@ -53,17 +53,23 @@ const MainContainer = props => {
     }
   };
 
-  const start = () => {
+  const init=()=>{
     setBeforeList(baggageList.slice());
     setCarrier(Array(lineLength).fill(0));
     setAfterList([]);
     setTime(0);
+  }
+  const start = () => {
+    init();
     setTimeout(
       handleCarrier(baggageList.slice(), Array(lineLength).fill(0)),
       1000
     );
   };
 
+ 
+  
+  
   return (
     <MainTemplate>
       <Header
@@ -80,4 +86,4 @@ const MainContainer = props => {
   );
 };
 
-export default React.memo(MainContainer);
+export default MainContainer;

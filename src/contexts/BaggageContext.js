@@ -1,4 +1,4 @@
-import{ createContext } from "react";
+import{ createContext,useContext } from "react";
 
 const BaggageContext = createContext({
   lineLength: 0,
@@ -6,4 +6,6 @@ const BaggageContext = createContext({
   baggageList: [],
   setValue:()=>{},
 });
+const useBaggageContext=()=>useContext(BaggageContext);
+export {useBaggageContext};
 export default BaggageContext;

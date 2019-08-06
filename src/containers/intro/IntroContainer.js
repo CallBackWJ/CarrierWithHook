@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import IntroTemplate from "../../components/intro/IntroTemplate";
 import DataForm from "../../components/intro/DataForm";
-import BaggageContext from "../../contexts/BaggageContext";
+import {useBaggageContext} from "../../contexts/BaggageContext";
 
 const IntroContainer = props => {
   const IntroState = {
@@ -10,9 +10,10 @@ const IntroContainer = props => {
     maxWeight: "",
     baggageList: ""
   };
+  
   const [state, action] = useState(IntroState);
   const { lineLength, maxWeight, baggageList } = state;
-  const { setValue } = useContext(BaggageContext);
+  const { setLinelength,setMaxWeight,setBaggageList } = useBaggageContext();
 
   //문자열에 0~9이외에 문자가 있는지 체크
   const isNumberFormValid = text => !/[^0-9]/g.test(text);
@@ -60,9 +61,9 @@ const IntroContainer = props => {
     });
 
   const handleClick = () => {
-    setValue("lineLength", Number(lineLength));
-    setValue("maxWeight", Number(maxWeight));
-    setValue("baggageList", makeToArray(baggageList, ",", maxWeight));
+    setLinelength( Number(lineLength));
+    setMaxWeight( Number(maxWeight));
+    setBaggageList(makeToArray(baggageList, ",", maxWeight));
     props.history.push("/main");
   };
 
